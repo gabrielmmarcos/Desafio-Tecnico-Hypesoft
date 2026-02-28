@@ -2,8 +2,13 @@ using Hypesoft.Domain.Repositories;
 using Hypesoft.Infrastructure.Data;
 using Hypesoft.Infrastructure.Repositories;
 using Hypesoft.Application.Handlers;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
