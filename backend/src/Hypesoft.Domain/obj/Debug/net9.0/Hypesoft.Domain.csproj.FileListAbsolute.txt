@@ -1,0 +1,12 @@
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/bin/Debug/net9.0/Hypesoft.Domain.deps.json
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/bin/Debug/net9.0/Hypesoft.Domain.dll
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/bin/Debug/net9.0/Hypesoft.Domain.pdb
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.AssemblyInfoInputs.cache
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.AssemblyInfo.cs
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.csproj.CoreCompileInputs.cache
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.sourcelink.json
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.dll
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/refint/Hypesoft.Domain.dll
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/Hypesoft.Domain.pdb
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Domain/obj/Debug/net9.0/ref/Hypesoft.Domain.dll
