@@ -13,11 +13,10 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const links = [
-        { icon: <Home size={22} />, text: "Home", href: "/home" },
         { icon: <PackageSearch size={22} />, text: "Produtos", href: "/produtos" },
         { icon: <LayoutDashboard size={22} />, text: "Dashboard", href: "/dashboard" },
-        { icon: <Bot size={22} />, text: "Categorias", href: "/chatbot" },
-        { icon: <User size={22} />, text: "Perfil", href: "/profile" },
+        { icon: <Bot size={22} />, text: "Categorias", href: "/categoria" },
+        { icon: <User size={22} />, text: "Perfil", href: "/perfil" },
     ];
 
     return (
