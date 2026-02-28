@@ -1,0 +1,24 @@
+# [bin] e [obj] - Arquivos de compilação
+**/bin/
+**/obj/
+
+# Visual Studio e VS Code
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+
+# Docker
+.dockerignore
+
+# Environment files (Segurança!)
+.env
+.env.local
+appsettings.Development.json
+
+# Logs
+*.log
+
+# Pasta de pacotes do NuGet
+packages/
