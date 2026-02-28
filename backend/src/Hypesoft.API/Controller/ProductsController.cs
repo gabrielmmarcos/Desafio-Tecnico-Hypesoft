@@ -25,11 +25,25 @@ public class ProductsController : ControllerBase
         var products = await _mediator.Send(new GetProductsQuery());
         return Ok(products);
     }
+        [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var product = await _mediator.Send(new GetProductByIdQuery(id));
+        return product != null ? Ok(product) : NotFound();
+    }
+
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, ProductRequest request)
     {
         var success = await _mediator.Send(new UpdateProductCommand(id, request));
+        return success ? NoContent() : NotFound();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var success = await _mediator.Send(new DeleteProductCommand(id));
         return success ? NoContent() : NotFound();
     }
 }
