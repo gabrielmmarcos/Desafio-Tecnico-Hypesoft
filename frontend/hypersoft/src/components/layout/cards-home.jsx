@@ -1,41 +1,57 @@
 import React from "react";
-import { Camera } from "lucide-react";
+import { Package } from "lucide-react";
 
-const ItemCard = ({ id, nome, categoria, img }) => {
+const ItemCard = ({ id, nome, descricao, preco, categoria, quantidade }) => {
+
+    const formatarPreco = (valor) => {
+        if (!valor) return "R$ 0,00";
+        return valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+    };
+
     return (
-        <div className=" rounded-xl flex flex-col items-center w-full h-80 shadow-sm">
+        <div className="bg-white rounded-2xl shadow-xl border border-purple-100 hover:shadow-2xl transition flex flex-col overflow-hidden">
 
-            {/* Área da imagem */}
-            <div
-                className={`h-1/2 w-full rounded-xl flex justify-center items-center p-3 transition ${img
-                    ? "border border-gray-300 bg-transparent"
-                    : "bg-blue-200"
-                    }`}
-            >
-                {img ? (
-                    <img
-                        src={img}
-                        className="object-contain w-full h-full rounded-lg"
-                    />
-                ) : (
-                    <Camera size={64} className="text-blue-600" />
-                )}
+            {/* Header Roxo */}
+            <div className="bg-linear-to-br from-purple-600 to-indigo-600 p-6 flex justify-center items-center">
+                <Package className="text-white w-12 h-12" />
             </div>
 
+            {/* Conteúdo */}
+            <div className="p-6 flex flex-col gap-2 flex-1">
+                <h4 className="font-bold text-xl text-purple-800 uppercase">
+                    {nome}
+                </h4>
 
-            <div className="bg-blue-50 w-full h-1/2 p-4 flex flex-col justify-between">
-                <div>
-                    <h4 className="font-bold text-xl uppercase">{nome}</h4>
+                <p className="text-gray-500 text-sm line-clamp-2">
+                    {descricao}
+                </p>
+
+                <div className="mt-4 space-y-1 text-sm">
                     <p>
-                        <span className="font-medium">Categoria:</span> {categoria}
+                        <span className="font-medium text-purple-700">
+                            Categoria:
+                        </span>{" "}
+                        {categoria}
+                    </p>
+
+                    <p>
+                        <span className="font-medium text-purple-700">
+                            Estoque:
+                        </span>{" "}
+                        {quantidade}
+                    </p>
+
+                    <p className="text-lg font-bold text-indigo-700 mt-2">
+                        {formatarPreco(preco)}
                     </p>
                 </div>
 
-                <a href={`/dashboard/${id}`}>
-                    <button
-                        className="border border-blue-500 text-blue-500 w-full bg-white px-4 py-1 mt-3 rounded-lg hover:bg-blue-500 hover:text-white transition cursor-pointer"
-                    >
-                        Ver Análise
+                <a href={`/produto/${id}`} className="mt-auto">
+                    <button className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition">
+                        Ver Produto
                     </button>
                 </a>
             </div>
