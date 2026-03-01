@@ -26,6 +26,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register(RegisterRequest request)
     {
         var existingUser = await _userRepository.GetByEmailAsync(request.Email);
+
         if (existingUser != null)
             return BadRequest("Usuário já existe");
 
@@ -35,7 +36,6 @@ public class AuthController : ControllerBase
 
         return Ok("Usuário criado com sucesso");
     }
-
     // LOGIN 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
@@ -48,8 +48,7 @@ public class AuthController : ControllerBase
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Name, user.Name)
+            new Claim(ClaimTypes.Email, user.Email)
         };
 
         var key = new SymmetricSecurityKey(
@@ -78,7 +77,9 @@ public class AuthController : ControllerBase
         var users = await _userRepository.GetAllAsync();
 
         return Ok(users.Select(u => new {
+            
             u.Id,
+            u.Name,
             u.Email
         }));
     }
