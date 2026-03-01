@@ -5,7 +5,7 @@ using Hypesoft.Domain.Repositories;
 
 namespace Hypesoft.Application.Handlers;
 
-// Handler para Listar
+//  LISTAR APENAS PRODUTOS DO USUÁRIO
 public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductResponse>>
 {
     private readonly IProductRepository _repository;
@@ -13,29 +13,15 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, IEnumerable<
 
     public async Task<IEnumerable<ProductResponse>> Handle(GetProductsQuery request, CancellationToken ct)
     {
-        var products = await _repository.GetAllAsync();
-        return products.Select(p => new ProductResponse(p.Id, p.Name, p.Description, p.Price, p.Category, p.StockQuantity));
+        var products = await _repository.GetByUserIdAsync(request.UserId);
+
+        return products.Select(p =>
+            new ProductResponse(p.Id, p.Name, p.Description, p.Price, p.Category, p.StockQuantity));
     }
 }
 
-// Handler para Atualizar
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
-{
-    private readonly IProductRepository _repository;
-    public UpdateProductHandler(IProductRepository repository) => _repository = repository;
 
-    public async Task<bool> Handle(UpdateProductCommand request, CancellationToken ct)
-    {
-        var product = await _repository.GetByIdAsync(request.Id);
-        if (product == null) return false;
-
-        product.Update(request.Request.Name, request.Request.Description, request.Request.Price, request.Request.Category, request.Request.StockQuantity);
-        await _repository.UpdateAsync(product);
-        return true;
-    }
-}
-
-// Handler para buscar por ID
+// BUSCAR POR ID 
 public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponse?>
 {
     private readonly IProductRepository _repository;
@@ -44,14 +30,43 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Produc
     public async Task<ProductResponse?> Handle(GetProductByIdQuery request, CancellationToken ct)
     {
         var p = await _repository.GetByIdAsync(request.Id);
-        
-        if (p == null) return null;
+
+        if (p == null || p.UserId != request.UserId)
+            return null;
 
         return new ProductResponse(p.Id, p.Name, p.Description, p.Price, p.Category, p.StockQuantity);
     }
 }
 
-// Handler para Deletar
+
+//  UPDATE 
+public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
+{
+    private readonly IProductRepository _repository;
+    public UpdateProductHandler(IProductRepository repository) => _repository = repository;
+
+    public async Task<bool> Handle(UpdateProductCommand request, CancellationToken ct)
+    {
+        var product = await _repository.GetByIdAsync(request.Id);
+
+        if (product == null || product.UserId != request.UserId)
+            return false;
+
+        product.Update(
+            request.Request.Name,
+            request.Request.Description,
+            request.Request.Price,
+            request.Request.Category,
+            request.Request.StockQuantity
+        );
+
+        await _repository.UpdateAsync(product);
+
+        return true;
+    }
+}
+
+//  DELETE 
 public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
 {
     private readonly IProductRepository _repository;
@@ -60,9 +75,12 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
     public async Task<bool> Handle(DeleteProductCommand request, CancellationToken ct)
     {
         var product = await _repository.GetByIdAsync(request.Id);
-        if (product == null) return false;
+
+        if (product == null || product.UserId != request.UserId)
+            return false;
 
         await _repository.DeleteAsync(request.Id);
+
         return true;
     }
 }

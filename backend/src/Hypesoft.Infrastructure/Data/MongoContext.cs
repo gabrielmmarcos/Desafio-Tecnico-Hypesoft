@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Hypesoft.Domain.Entities;
 
+
 namespace Hypesoft.Infrastructure.Data;
 
 public class MongoContext
@@ -15,4 +16,5 @@ public class MongoContext
     }
 
     public IMongoCollection<Product> Products => _database.GetCollection<Product>("Products");
+    public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
 }

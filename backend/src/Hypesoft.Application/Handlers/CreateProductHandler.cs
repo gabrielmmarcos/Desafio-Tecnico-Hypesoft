@@ -10,6 +10,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Guid>
     private readonly IProductRepository _repository;
 
     public CreateProductHandler(IProductRepository repository) => _repository = repository;
+    
 
     public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
@@ -18,7 +19,8 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Guid>
             request.Request.Description, 
             request.Request.Price, 
             request.Request.Category, 
-            request.Request.StockQuantity
+            request.Request.StockQuantity,
+            request.UserId
         );
 
         await _repository.CreateAsync(product);

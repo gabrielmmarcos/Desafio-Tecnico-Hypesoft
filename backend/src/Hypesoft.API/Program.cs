@@ -2,14 +2,14 @@ using Hypesoft.Domain.Repositories;
 using Hypesoft.Infrastructure.Data;
 using Hypesoft.Infrastructure.Repositories;
 using Hypesoft.Application.Handlers;
-using Hypesoft.API.Services; // Certifique-se que o IdentityService está aqui
+using Hypesoft.API.Services; 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +48,7 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly));
@@ -56,18 +57,20 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "http://localhost:8080/realms/hypesoft"; 
-        options.Audience = "hypesoft-backend"; 
-        options.RequireHttpsMetadata = false; 
+        var key = Encoding.UTF8.GetBytes("SUA_CHAVE_SUPER_SECRETA_AQUI_123456789");
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = "http://localhost:8080/realms/hypesoft",
             ValidateAudience = true,
-            ValidateLifetime = true
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = "hypesoft-api",
+            ValidAudience = "hypesoft-api",
+            IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
-
 
 builder.Services.AddAuthorization(options =>
 {
