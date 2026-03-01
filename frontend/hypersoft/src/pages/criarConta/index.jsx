@@ -41,57 +41,66 @@ function CriarConta() {
 
     return (
         <>
-            <div className="flex min-h-screen bg-gradient-br from-purple-900 via-purple-700 to-indigo-900 items-center justify-center px-4">
-                <div className="flex w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden bg-white">
+            <div className="flex h-screen flex-col lg:flex-row-reverse items-center justify-center">
 
-                    <div className="hidden lg:flex flex-col justify-center items-center w-1/2 bg-gradient-br from-purple-600 via-violet-600 to-indigo-600 p-10 text-white">
-                        <h2 className="text-5xl font-bold mb-4">Hypersoft</h2>
-                        <p className="text-lg opacity-90 text-center">
-                            Crie sua conta e comece a gerenciar seus produtos agora.
+                {/* Lado gradiente */}
+                <div className="flex flex-col justify-center items-center h-1/2 w-full lg:w-1/2 lg:h-full bg-linear-to-br from-purple-600 via-violet-600 to-indigo-600 p-10  text-white">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+                        Hypersoft
+                    </h2>
+                    <p className="hidden md:block text-md md:text-lg opacity-90 text-center w-100">
+                        Crie sua conta e comece a gerenciar seus produtos agora.
+                    </p>
+                </div>
+
+                {/* Formulário */}
+                <form
+                    onSubmit={handleRegister}
+                    className="flex flex-col justify-center h-3/4 w-full lg:w-1/2 lg:h-full p-10 gap-4"
+                >
+                    <div className="flex flex-col px-5 lg:px-20 ">
+                        <h1 className="text-left text-3xl md:text-4xl font-bold text-purple-700">
+                            Criar Conta
+                        </h1>
+                        <p className="text-left text-gray-500 mb-6">
+                            Crie uma conta para continuar
                         </p>
                     </div>
+                    <div className="flex flex-col px-5 lg:px-20">
 
-                    <form
-                        onSubmit={handleRegister}
-                        className="flex flex-col w-full lg:w-1/2 p-10 gap-4"
-                    >
-                        <h1 className="text-4xl font-bold text-purple-700">
-                            Criar Conta 🚀
-                        </h1>
-
-                        <input
-                            type="text"
-                            value={name}
-                            autoComplete="name"
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Seu nome"
-                            required
-                            className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                        />
-
-                        <input
-                            type="email"
-                            value={email}
-                            autoComplete="username"
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Seu email"
-                            required
-                            className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                        />
-
-                        <input
-                            type="password"
-                            value={password}
-                            autoComplete="new-password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Crie uma senha"
-                            required
-                            className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                        />
+                        <div className="grid grid-cols-1 gap-y-2 ">
+                            <input
+                                type="text"
+                                value={name}
+                                autoComplete="name"
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Seu nome"
+                                required
+                                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                            />
+                            <input
+                                type="email"
+                                value={email}
+                                autoComplete="username"
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Seu email"
+                                required
+                                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                            />
+                            <input
+                                type="password"
+                                value={password}
+                                autoComplete="new-password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Crie uma senha"
+                                required
+                                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                            />
+                        </div>
 
                         <button
                             type="submit"
-                            className="bg-purple-600 hover:bg-purple-700 transition text-white font-semibold py-3 rounded-lg mt-4 shadow-lg"
+                            className="bg-purple-600 hover:bg-purple-700 transition text-white font-semibold py-3 rounded-lg mt-4 shadow-lg cursor-pointer"
                         >
                             Criar Conta
                         </button>
@@ -99,12 +108,12 @@ function CriarConta() {
                         <button
                             type="button"
                             onClick={() => navigate("/")}
-                            className="text-purple-600 hover:underline text-sm mt-2"
+                            className="text-purple-600 hover:underline text-sm mt-2 cursor-pointer"
                         >
                             Já tem conta? Fazer login
                         </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
 
             <ResponseAPI
