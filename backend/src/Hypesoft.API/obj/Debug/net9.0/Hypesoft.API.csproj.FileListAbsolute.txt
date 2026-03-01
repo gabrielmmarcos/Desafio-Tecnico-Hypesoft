@@ -12,8 +12,10 @@
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/MediatR.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/MediatR.Contracts.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
@@ -57,5 +59,3 @@
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/obj/Debug/net9.0/Hypesoft.API.pdb
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/obj/Debug/net9.0/Hypesoft.API.genruntimeconfig.cache
 /home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/obj/Debug/net9.0/ref/Hypesoft.API.dll
-/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
-/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
