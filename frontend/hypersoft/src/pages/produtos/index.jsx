@@ -1,5 +1,3 @@
-// home com todos os produtos
-
 import { useEffect, useState } from "react";
 import Navbar from "../../components/layout/navbar";
 import { Camera, AlertTriangle } from "lucide-react";

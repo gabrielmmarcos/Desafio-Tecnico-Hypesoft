@@ -17,7 +17,7 @@ import Produtos from "./pages/produtos"
 // import EditarProduto from "./pages/editarProduto"
 // import AdicionaProdutos from "./pages/novoProduto"
 // //perfil
-// import Perfil from "./pages/perfil"
+import Perfil from "./pages/perfil"
 
 const router = createBrowserRouter([
   //login
@@ -66,11 +66,11 @@ const router = createBrowserRouter([
   //   element: <EditarProduto />,
   // },
 
-  // //perfil
-  // {
-  //   path: "/perfil",
-  //   element: <Perfil />,
-  // },
+  //perfil
+  {
+    path: "/perfil",
+    element: <Perfil />,
+  },
 
 ]);
 
