@@ -5,6 +5,7 @@ import "./index.css";
 
 //login
 import Login from "./pages/login";
+import CriarConta from "./pages/criarConta";
 //home
 // import Produtos from "./pages/produtos"
 // //dashboard
@@ -24,6 +25,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Login />,
   },
+
+  //criar conta
+  {
+    path: "/criar-conta",
+    element: <CriarConta />
+  }
   // //home/produtos
 
   // {
