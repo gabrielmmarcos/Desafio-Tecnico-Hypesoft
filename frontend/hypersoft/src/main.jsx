@@ -13,9 +13,9 @@ import Produtos from "./pages/produtos"
 // //categoria
 // import Categoria from "./pages/categoria"
 // //crud produto
-// import VerProduto from "./pages/verProduto"
-// import EditarProduto from "./pages/editarProduto"
-// import AdicionaProdutos from "./pages/novoProduto"
+import VerProduto from "./pages/verProduto"
+import EditarProduto from "./pages/editarProduto"
+import AdicionaProdutos from "./pages/novoProduto"
 // //perfil
 import Perfil from "./pages/perfil"
 
@@ -49,22 +49,22 @@ const router = createBrowserRouter([
   //   element: <Categoria />,
   // },
 
-  // //crud produtos
-  // //ver produto
-  // {
-  //   path: "/ver-produto/:id",
-  //   element: <VerProduto />,
-  // },
-  // //adiciona produtos
-  // {
-  //   path: "/adiciona-produto",
-  //   element: <AdicionaProdutos />,
-  // },
-  // // editar produto
-  // {
-  //   path: "/editar/:id",
-  //   element: <EditarProduto />,
-  // },
+  //crud produtos
+  // ver produto
+  {
+    path: "/produto/:id",
+    element: <VerProduto />,
+  },
+  // adiciona produtos
+  {
+    path: "/adiciona-produto",
+    element: <AdicionaProdutos />,
+  },
+  // editar produto
+  {
+    path: "/editar-produto/:id",
+    element: <EditarProduto />,
+  },
 
   //perfil
   {
