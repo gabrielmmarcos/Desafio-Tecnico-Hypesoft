@@ -145,7 +145,7 @@ function VerProduto() {
         <>
             <Navbar />
 
-            <div className="ml-64 p-10 bg-gray-50 min-h-screen">
+            <div className="ml-0 lg:ml-64 p-10 bg-gray-50 min-h-screen w-full lg:w-7xl">
 
 
                 {/* TOPO */}
@@ -159,7 +159,7 @@ function VerProduto() {
                         Voltar
                     </button>
 
-                    <div className="flex justify-between">
+                    <div className="flex flex-col lg:flex-row items-center gap-2 lg:justify-between w-full">
                         <h1 className="text-3xl md:text-4xl font-bold text-purple-800">
                             {produto?.name}
                         </h1>
@@ -181,7 +181,7 @@ function VerProduto() {
                 </div>
 
                 {/* INFO */}
-                <div className="grid grid-cols-2 gap-10 mb-12 h-fit">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12 h-fit">
                     <div className="bg-white p-6 rounded-xl shadow w-full">
 
 
@@ -193,7 +193,7 @@ function VerProduto() {
                         <div className="space-y-3 text-gray-700 grid grid-cols-2 items-center justify-center">
 
                             <p className="text-center font-normal text-xl">
-                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Preço:</span>{" "}
+                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Preço(und):</span>{" "}
                                 {formatarPreco(produto?.price)}
                             </p>
 
@@ -214,7 +214,7 @@ function VerProduto() {
 
                         </div>
                     </div>
-                    <div className="bg-linear-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                    <div className="bg-linear-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center h-50 lg:h-full">
                         <Package size={80} className="text-white" />
                     </div>
                 </div>
