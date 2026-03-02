@@ -10,7 +10,7 @@ import CriarConta from "./pages/criarConta";
 //home
 import Produtos from "./pages/produtos"
 // //dashboard
-// import Dashboard from "./pages/dashboard"
+import Dashboard from "./pages/dashboard"
 // //categoria
 // import Categoria from "./pages/categoria"
 // //crud produto
@@ -43,13 +43,13 @@ const router = createBrowserRouter([
     ),
   },
 
-  // //dashboard
-  // {
-  //   path: "/dashboard",
-  //   element: (<ProtectedRoute>
-  // <Dashboard />
-  // </ProtectedRoute>),
-  // },
+  //dashboard
+  {
+    path: "/dashboard",
+    element: (<ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>),
+  },
   // //categoria
   // {
   //   path: "/categoria",

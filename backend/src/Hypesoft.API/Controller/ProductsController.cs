@@ -51,6 +51,8 @@ public class ProductsController : ControllerBase
         return Ok(product);
     }
 
+    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {

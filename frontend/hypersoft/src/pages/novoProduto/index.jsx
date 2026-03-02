@@ -170,7 +170,7 @@ function AddProduto() {
                         {/* Preço */}
                         <div>
                             <label className="block text-sm font-medium mb-1">
-                                Preço
+                                Preço (und)
                             </label>
                             <input
                                 type="number"
