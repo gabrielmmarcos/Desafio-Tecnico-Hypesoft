@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Navbar from "../../components/layout/navbar";
 import ResponseAPI from "../../components/ui/response-api";
 import ConfirmModal from "../../components/ui/confirm-modal";
-import { Package, ArrowLeft } from "lucide-react";
+import { Package, ArrowLeft, Plus } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
 
@@ -11,178 +11,295 @@ function VerProduto() {
     const navigate = useNavigate();
 
     const [produto, setProduto] = useState(null);
+    const [categoriaNome, setCategoriaNome] = useState("-");
+    const [movimentacoes, setMovimentacoes] = useState([]);
+    const [estoque, setEstoque] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    const [modalAberto, setModalAberto] = useState(false);
+    const [tipo, setTipo] = useState("entrada");
+    const [quantidadeInput, setQuantidadeInput] = useState("");
 
     const [responseOpen, setResponseOpen] = useState(false);
     const [responseTitle, setResponseTitle] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
-
     const [showConfirm, setShowConfirm] = useState(false);
 
-    // GET Produto
-    useEffect(() => {
-        async function carregarProduto() {
-            try {
-                const response = await api.get(`/api/Products/${id}`);
-                setProduto(response.data);
-            } catch (error) {
-                console.error(error);
-                setResponseTitle("Erro");
-                setResponseMessage("Produto não encontrado.");
-                setResponseOpen(true);
-            } finally {
-                setLoading(false);
-            }
-        }
+    // FORMATAR PREÇO
+    const formatarPreco = (valor) => {
+        if (!valor) return "R$ 0,00";
+        return Number(valor).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+    };
 
-        carregarProduto();
+    //  Carregar Produto
+    const carregarProduto = useCallback(async () => {
+        try {
+            const res = await api.get(`/api/products/${id}`);
+            setProduto(res.data);
+
+            // Buscar categoria
+            const catRes = await api.get("/api/categories");
+            const categoria = catRes.data.find(c => c.id === res.data.categoryId);
+            if (categoria) setCategoriaNome(categoria.name);
+
+        } catch (error) {
+            setResponseTitle("Erro", error);
+            setResponseMessage("Produto não encontrado.");
+            setResponseOpen(true);
+        }
     }, [id]);
 
-    // DELETE Produto
-    const handleDelete = async () => {
+    //  Carregar Estoque
+    const carregarEstoque = useCallback(async () => {
         try {
-            await api.delete(`/api/Products/${id}`);
-            setResponseTitle("Sucesso!");
-            setResponseMessage("Produto removido com sucesso!");
-            setResponseOpen(true);
-        } catch (error) {
-            console.error(error);
+            const res = await api.get(`/api/stock/${id}`);
+            const movimentacoesApi = res.data || [];
+
+            setMovimentacoes(movimentacoesApi);
+
+            const totalEntradas = movimentacoesApi
+                .filter(m => m.type === "Entrada")
+                .reduce((acc, m) => acc + m.quantity, 0);
+
+            const totalSaidas = movimentacoesApi
+                .filter(m => m.type === "Saida")
+                .reduce((acc, m) => acc + m.quantity, 0);
+
+            setEstoque(totalEntradas - totalSaidas);
+
+        } catch {
+            setEstoque(0);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        async function init() {
+            await carregarProduto();
+            await carregarEstoque();
+            setLoading(false);
+        }
+        init();
+    }, [carregarProduto, carregarEstoque]);
+
+    // POST Entrada / Saída
+    const handleAdd = async () => {
+        if (!quantidadeInput) {
             setResponseTitle("Erro");
-            setResponseMessage("Erro ao remover produto.");
+            setResponseMessage("Informe a quantidade.");
+            setResponseOpen(true);
+            return;
+        }
+
+        try {
+            const endpoint =
+                tipo === "entrada"
+                    ? `/api/stock/entrada/${id}`
+                    : `/api/stock/saida/${id}`;
+
+            await api.post(endpoint, null, {
+                params: {
+                    quantity: Number(quantidadeInput)
+                }
+            });
+
+            setModalAberto(false);
+            setQuantidadeInput("");
+
+            await carregarEstoque();
+
+            setResponseTitle("Registrado!");
+            setResponseMessage(
+                tipo === "entrada"
+                    ? "Entrada registrada!"
+                    : "Saída registrada!"
+            );
+            setResponseOpen(true);
+
+        } catch (error) {
+            setResponseTitle("Erro", error);
+            setResponseMessage("Erro ao registrar movimentação.");
             setResponseOpen(true);
         }
     };
 
-    if (loading) {
-        return (
-            <>
-                <Navbar />
-                <div className="ml-64 p-10">Carregando...</div>
-            </>
-        );
-    }
+    // DELETE Produto
+    const handleDelete = async () => {
+        try {
+            await api.delete(`/api/products/${id}`);
+            setResponseTitle("Sucesso!");
+            setResponseMessage("Produto removido com sucesso!.");
+            setResponseOpen(true);
+        } catch {
+            setResponseTitle("Erro");
+            setResponseMessage("Erro ao remover.");
+            setResponseOpen(true);
+        }
+    };
 
-    if (!produto) {
-        return (
-            <>
-                <Navbar />
-                <div className="ml-64 p-10">Produto não encontrado.</div>
-            </>
-        );
-    }
+    if (loading) return <><Navbar /><div className="ml-64 p-10">Carregando...</div></>;
 
     return (
         <>
             <Navbar />
 
-            <div className="ml-64 p-10 bg-gray-50 min-h-screen flex flex-col items-center">
-
-                {/* TOPO - Nome + Botões */}
-                <div className="flex w-full justify-between items-center mb-16 max-w-250">
+            <div className="ml-64 p-10 bg-gray-50 min-h-screen">
 
 
+                {/* TOPO */}
+                <div className="mb-8">
+
+                    <button
+                        onClick={() => navigate("/produtos")}
+                        className="flex items-center gap-2 text-purple-600 mb-4 cursor-pointer"
+                    >
+                        <ArrowLeft size={18} />
+                        Voltar
+                    </button>
+
+                    <h1 className="text-3xl md:text-4xl font-bold text-purple-800">
+                        {produto?.name}
+                    </h1>
                 </div>
 
-                {/* CONTEÚDO PRINCIPAL */}
-                <div className="flex flex-col lg:flex-row-reverse gap-50 w-full max-w-250 justify-center items-center">
+                {/* INFO */}
+                <div className="grid grid-cols-2 gap-10 mb-12">
 
-                    {/* IMAGEM  */}
-                    <div className="flex bg-linear-to-br from-purple-600 via-violet-600 to-indigo-600 rounded-xl w-full lg:w-96 h-56 lg:h-100 items-center justify-center shadow-lg">
-                        <Package size={100} className="text-white" />
+                    <div className="bg-white p-6 rounded-xl shadow">
+                        <p><strong>Preço:</strong> {formatarPreco(produto?.price)}</p>
+                        <p><strong>Categoria:</strong> {categoriaNome}</p>
+                        <p><strong>Descrição:</strong> {produto?.description}</p>
+                        <p><strong>Estoque Atual:</strong> {estoque} und.</p>
                     </div>
 
-                    {/* INFORMAÇÕES */}
-                    <div className="flex flex-col w-fit gap-8 ">
+                    <div className="bg-linear-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                        <Package size={80} className="text-white" />
+                    </div>
+                </div>
 
-                        <div className="grid grid-cols-1  gap-3">
-                            <h1 className="text-4xl font-bold text-purple-800 pb-9">
-                                {produto.name}
-                            </h1>
+                {/* BOTÕES */}
+                <div className="flex flex-wrap gap-3 mb-6">
 
+                    <button
+                        onClick={() => { setTipo("entrada"); setModalAberto(true); }}
+                        className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2"
+                    >
+                        <Plus size={16} /> Entrada
+                    </button>
 
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase">
-                                    Preço
-                                </h3>
-                                <p className="text-xl text-gray-800 font-semibold">
-                                    R$ {Number(produto.price).toFixed(2)}
-                                </p>
-                            </div>
+                    <button
+                        onClick={() => { setTipo("saida"); setModalAberto(true); }}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2"
+                    >
+                        <Plus size={16} /> Saída
+                    </button>
 
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase">
-                                    Categoria
-                                </h3>
-                                <p className="text-lg text-gray-800">
-                                    {produto.category}
-                                </p>
-                            </div>
+                    <button
+                        onClick={() => navigate(`/produtos/editar/${id}`)}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-md"
+                    >
+                        Editar
+                    </button>
 
-                            <div>
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase">
-                                    Estoque
-                                </h3>
-                                <p className="text-lg text-gray-800">
-                                    {produto.stockQuantity}
-                                </p>
-                            </div>
+                    <button
+                        onClick={() => setShowConfirm(true)}
+                        className="bg-red-600 text-white px-4 py-2 rounded-md"
+                    >
+                        Deletar
+                    </button>
+                </div>
 
+                {/* TABELA */}
+                <div className="bg-white rounded-lg shadow overflow-x-auto">
+                    <table className="w-full text-center">
+                        <thead className="bg-purple-600 text-white">
+                            <tr>
+                                <th className="py-3 px-4 border border-purple-400 text-center rounded-tl-lg">Tipo</th>
+                                <th className="py-3 px-4 border border-purple-400 text-center">Quantidade</th>
+                                <th className="py-3 px-4 border border-purple-400 text-center">Data</th>
+                                <th className="py-3 px-4 border border-purple-400 text-center">Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {movimentacoes.length > 0 ? (
+                                movimentacoes.map((m, i) => {
+                                    const dataObj = new Date(m.date);
 
+                                    return (
+                                        <tr key={i} className="border border-purple-200 hover:bg-purple-50 transition">
+                                            <td className={`py-3 px-4 text-center  border border-purple-100  ${m.type === "Entrada" ? "text-green-600" : "text-red-600"
+                                                }`}>
+                                                {m.type}
+                                            </td>
+                                            <td className="py-3 px-4 text-center border border-purple-100">{m.quantity}</td>
+                                            <td className="py-3 px-4 text-center border border-purple-100">{dataObj.toLocaleDateString("pt-BR")}</td>
+                                            <td className="py-3 px-4 text-center border border-purple-100">{dataObj.toLocaleTimeString("pt-BR")}</td>
+                                        </tr>
+                                    );
+                                })
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" className="py-6 text-gray-500">
+                                        Nenhuma movimentação.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div >
 
-                            <div className="flex gap-3 pt-10">
+            {/* MODAL MOVIMENTAÇÃO */}
+            {
+                modalAberto && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+                        <div className="bg-white p-6 rounded-xl w-80">
+                            <h2 className="text-xl font-bold mb-4">
+                                Nova {tipo === "entrada" ? "Entrada" : "Saída"}
+                            </h2>
 
+                            <input
+                                type="number"
+                                placeholder="Quantidade"
+                                value={quantidadeInput}
+                                onChange={(e) => setQuantidadeInput(e.target.value)}
+                                className="w-full border px-3 py-2 rounded mb-4"
+                            />
+
+                            <div className="flex justify-between">
                                 <button
-                                    type="button"
-                                    onClick={() => navigate("/produtos")}
-                                    className="flex items-center gap-2 border border-purple-600 text-purple-600 px-5 py-2 rounded-lg hover:bg-purple-100 transition cursor-pointer"
+                                    onClick={handleAdd}
+                                    className="bg-purple-600 text-white px-4 py-2 rounded"
                                 >
-                                    <ArrowLeft size={18} />
-                                    Voltar
+                                    Salvar
                                 </button>
-
                                 <button
-                                    onClick={() => navigate(`/editar-produto/${id}`)}
-                                    className="bg-purple-600 text-white px-5 py-2 rounded-md hover:bg-purple-700 transition cursor-pointer"
+                                    onClick={() => setModalAberto(false)}
+                                    className="bg-gray-300 px-4 py-2 rounded"
                                 >
-                                    Editar
+                                    Cancelar
                                 </button>
-
-                                <button
-                                    onClick={() => setShowConfirm(true)}
-                                    className="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-600 transition cursor-pointer"
-                                >
-                                    Deletar
-                                </button>
-
                             </div>
-
                         </div>
-
                     </div>
+                )
+            }
 
-                </div>
-            </div>
-
-            {/* CONFIRM DELETE */}
             <ConfirmModal
                 open={showConfirm}
-                onConfirm={() => {
-                    setShowConfirm(false);
-                    handleDelete();
-                }}
+                onConfirm={handleDelete}
                 onCancel={() => setShowConfirm(false)}
             />
 
-            {/* RESPONSE MODAL */}
             <ResponseAPI
                 open={responseOpen}
                 title={responseTitle}
                 message={responseMessage}
                 onClose={() => {
                     setResponseOpen(false);
-                    if (responseTitle === "Sucesso!") {
-                        navigate("/produtos");
-                    }
+                    if (responseTitle === "Sucesso!") navigate("/produtos");
                 }}
             />
         </>

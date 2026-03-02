@@ -1,11 +1,18 @@
 import React from "react";
 import { Package } from "lucide-react";
 
-const ItemCard = ({ id, nome, preco, categoria, quantidade }) => {
+const ItemCard = ({
+    id,
+    name,
+    description,
+    price,
+    categoryName,
+    stockQuantity
+}) => {
 
     const formatarPreco = (valor) => {
         if (!valor) return "R$ 0,00";
-        return valor.toLocaleString("pt-BR", {
+        return Number(valor).toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
         });
@@ -14,33 +21,45 @@ const ItemCard = ({ id, nome, preco, categoria, quantidade }) => {
     return (
         <div className="bg-white rounded-2xl shadow-xl border border-purple-100 hover:shadow-2xl transition flex flex-col overflow-hidden">
 
-            {/* Header Roxo */}
             <div className="bg-linear-to-br from-purple-600 to-indigo-600 p-6 flex justify-center items-center h-40">
                 <Package className="text-white w-12 h-12" />
             </div>
 
-            {/* Conteúdo */}
-            <div className="p-6 flex flex-col gap-2 flex-1">
+
+            <div className="p-6 flex flex-col gap-3 flex-1">
+
                 <h4 className="font-bold text-xl text-purple-800 uppercase">
-                    {nome}
+                    {name}
                 </h4>
-                <div className="mt-4 space-y-1 text-sm">
+
+                <p className="text-gray-600 text-sm line-clamp-2">
+                    {description}
+                </p>
+
+                <div className="mt-3 space-y-1 text-sm">
+
                     <p>
                         <span className="font-medium text-purple-700">
                             Categoria:
                         </span>{" "}
-                        {categoria}
+                        {categoryName || "Não informada"}
                     </p>
 
                     <p>
                         <span className="font-medium text-purple-700">
                             Estoque:
                         </span>{" "}
-                        {quantidade}
+                        {stockQuantity}
                     </p>
 
-                    <p className="text-lg font-medium  mt-2">
-                        {formatarPreco(preco)}
+                </div>
+
+                <div className="mt-3">
+                    <p className="text-xs text-gray-500">
+                        Valor da unidade
+                    </p>
+                    <p className="text-2xl font-bold text-green-600">
+                        {formatarPreco(price)}
                     </p>
                 </div>
 
@@ -49,6 +68,7 @@ const ItemCard = ({ id, nome, preco, categoria, quantidade }) => {
                         Ver Produto
                     </button>
                 </a>
+
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ function Produtos() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [busca, setBusca] = useState("");
-
+    const [categories, setCategories] = useState([]);
     // botao de pesquisa    
     const produtosFiltrados = produtos.filter((produto) =>
         produto.name.toLowerCase().includes(busca.toLowerCase())
@@ -27,13 +27,59 @@ function Produtos() {
 
         carregarUsuario();
     }, []);
+    // busca categoria
+    useEffect(() => {
+        async function carregarCategorias() {
+            try {
+                const response = await api.get("/api/categories");
+                setCategories(response.data || []);
+            } catch (error) {
+                console.error("Erro ao carregar categorias:", error);
+            }
+        }
 
+        carregarCategorias();
+    }, []);
     // Buscar produtos
     useEffect(() => {
         async function carregarProdutos() {
             try {
-                const response = await api.get("/api/Products");
-                setProdutos(response.data || []);
+                const response = await api.get("/api/products");
+                const produtosBase = response.data || [];
+
+                // Buscar estoque de cada produto
+                const produtosComEstoque = await Promise.all(
+                    produtosBase.map(async (produto) => {
+                        try {
+                            const stockResponse = await api.get(`/api/stock/${produto.id}`);
+                            const movimentacoes = stockResponse.data || [];
+
+                            const totalEntradas = movimentacoes
+                                .filter(m => m.type === "Entrada")
+                                .reduce((acc, m) => acc + m.quantity, 0);
+
+                            const totalSaidas = movimentacoes
+                                .filter(m => m.type === "Saida")
+                                .reduce((acc, m) => acc + m.quantity, 0);
+
+                            const estoqueFinal = totalEntradas - totalSaidas;
+
+                            return {
+                                ...produto,
+                                stockQuantity: estoqueFinal
+                            };
+
+                        } catch {
+                            return {
+                                ...produto,
+                                stockQuantity: 0
+                            };
+                        }
+                    })
+                );
+
+                setProdutos(produtosComEstoque);
+
             } catch (error) {
                 console.error("Erro ao carregar produtos:", error);
             } finally {
@@ -43,7 +89,10 @@ function Produtos() {
 
         carregarProdutos();
     }, []);
-
+    const getCategoryName = (categoryId) => {
+        const category = categories.find(c => c.id === categoryId);
+        return category ? category.name : "Não encontrada";
+    };
     return (
         <div className="flex w-full">
             <Navbar />
@@ -97,10 +146,11 @@ function Produtos() {
                             <ItemCard
                                 key={produto.id}
                                 id={produto.id}
-                                nome={produto.name}
-                                categoria={produto.category}
-                                preco={produto.price}
-                                quantidade={produto.stockQuantity}
+                                name={produto.name}
+                                description={produto.description}
+                                price={produto.price}
+                                categoryName={getCategoryName(produto.categoryId)}
+                                stockQuantity={produto.stockQuantity}
                             />
                         ))}
                     </div>

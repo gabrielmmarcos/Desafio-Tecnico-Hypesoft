@@ -270,14 +270,14 @@ function AddProduto() {
                         <div className="flex justify-end gap-2">
                             <button
                                 onClick={() => setShowCategoryModal(false)}
-                                className="px-4 py-2 border rounded-lg"
+                                className="px-4 py-2 border rounded-lg cursor-pointer"
                             >
                                 Cancelar
                             </button>
 
                             <button
                                 onClick={handleCreateCategory}
-                                className="px-4 py-2 bg-purple-600 text-white rounded-lg"
+                                className="px-4 py-2 bg-purple-600 text-white rounded-lg cursor-pointer"
                             >
                                 Criar
                             </button>
