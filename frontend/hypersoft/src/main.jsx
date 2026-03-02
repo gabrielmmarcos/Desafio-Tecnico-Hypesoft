@@ -11,8 +11,8 @@ import CriarConta from "./pages/criarConta";
 import Produtos from "./pages/produtos"
 // //dashboard
 import Dashboard from "./pages/dashboard"
-// //categoria
-// import Categoria from "./pages/categoria"
+//categoria
+import Categoria from "./pages/categoria"
 // //crud produto
 import VerProduto from "./pages/verProduto"
 import EditarProduto from "./pages/editarProduto"
@@ -50,13 +50,13 @@ const router = createBrowserRouter([
       <Dashboard />
     </ProtectedRoute>),
   },
-  // //categoria
-  // {
-  //   path: "/categoria",
-  //   element:( <ProtectedRoute>
-  // <Categoria />
-  // </ProtectedRoute>),
-  // },
+  //categoria
+  {
+    path: "/categoria",
+    element: (<ProtectedRoute>
+      <Categoria />
+    </ProtectedRoute>),
+  },
 
   //crud produtos
   // ver produto
