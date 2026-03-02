@@ -49,9 +49,12 @@ builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();;
+builder.Services.AddScoped<IStockMovementRepository, StockMovementRepository>();
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly));
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

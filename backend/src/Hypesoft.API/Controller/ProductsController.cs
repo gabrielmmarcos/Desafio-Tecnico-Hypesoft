@@ -1,71 +1,60 @@
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Hypesoft.Application.Commands;
-using Hypesoft.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using Hypesoft.Domain.Entities;
+using Hypesoft.Domain.Repositories;
 
-namespace Hypesoft.API.Controllers;
 
-
-[ApiController]
-[Route("api/[controller]")]
 [Authorize]
+[ApiController]
+[Route("api/products")]
 public class ProductsController : ControllerBase
 {
-    private readonly IMediator _mediator;
-    public ProductsController(IMediator mediator) => _mediator = mediator;
+    private readonly IProductRepository _repository;
+    private readonly ICategoryRepository _categoryRepository;
+
+    public ProductsController(
+        IProductRepository repository,
+        ICategoryRepository categoryRepository)
+    {
+        _repository = repository;
+        _categoryRepository = categoryRepository;
+    }
 
     [HttpPost]
-    public async Task<IActionResult> Create(ProductRequest request)
+    public async Task<IActionResult> Create(
+        string name,
+        string description,
+        decimal price,
+        Guid categoryId)
     {
-        var userId = GetUserId();
+        var category = await _categoryRepository.GetByIdAsync(categoryId);
 
-        var id = await _mediator.Send(new CreateProductCommand(request, userId));
+        if (category == null)
+            return BadRequest("Categoria não existe");
 
-        return CreatedAtAction(nameof(GetAll), new { id }, id);
+        var product = new Product(name, description, price, categoryId);
+
+        await _repository.CreateAsync(product);
+
+        return Ok(product.Id);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
-    {
-        var userId = GetUserId();
+        => Ok(await _repository.GetAllAsync());
 
-        var products = await _mediator.Send(new GetProductsQuery(userId));
-
-        return Ok(products);
-}
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var userId = GetUserId();
-
-        var product = await _mediator.Send(new GetProductByIdQuery(id, userId));
-
-        return product != null ? Ok(product) : NotFound();
+        var product = await _repository.GetByIdAsync(id);
+        if (product == null) return NotFound();
+        return Ok(product);
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, ProductRequest request)
-    {
-        var userId = GetUserId();
-
-        var success = await _mediator.Send(new UpdateProductCommand(id, request, userId));
-
-        return success ? NoContent() : NotFound();
-    }
-
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var userId = GetUserId();
-
-        var success = await _mediator.Send(new DeleteProductCommand(id, userId));
-
-        return success ? NoContent() : NotFound();
+        await _repository.DeleteAsync(id);
+        return NoContent();
     }
-    private string GetUserId()
-    {
-    return User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    }      
 }
