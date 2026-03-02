@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/layout/navbar";
 import ResponseAPI from "../../components/ui/response-api";
 import ConfirmModal from "../../components/ui/confirm-modal";
-import { Package } from "lucide-react";
+import { Package, ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
 
@@ -130,6 +130,15 @@ function VerProduto() {
 
 
                             <div className="flex gap-3 pt-10">
+
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/produtos")}
+                                    className="flex items-center gap-2 border border-purple-600 text-purple-600 px-5 py-2 rounded-lg hover:bg-purple-100 transition cursor-pointer"
+                                >
+                                    <ArrowLeft size={18} />
+                                    Voltar
+                                </button>
 
                                 <button
                                     onClick={() => navigate(`/editar-produto/${id}`)}
