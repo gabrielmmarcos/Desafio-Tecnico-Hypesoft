@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
@@ -35,41 +36,65 @@ const router = createBrowserRouter([
 
   {
     path: "/produtos",
-    element: <Produtos />,
+    element: (
+      <ProtectedRoute>
+        <Produtos />
+      </ProtectedRoute>
+    ),
   },
 
   // //dashboard
   // {
   //   path: "/dashboard",
-  //   element: <Dashboard />,
+  //   element: (<ProtectedRoute>
+  // <Dashboard />
+  // </ProtectedRoute>),
   // },
   // //categoria
   // {
   //   path: "/categoria",
-  //   element: <Categoria />,
+  //   element:( <ProtectedRoute>
+  // <Categoria />
+  // </ProtectedRoute>),
   // },
 
   //crud produtos
   // ver produto
   {
     path: "/produto/:id",
-    element: <VerProduto />,
+    element: (
+      <ProtectedRoute>
+        <VerProduto />
+      </ProtectedRoute>
+    ),
   },
   // adiciona produtos
   {
     path: "/adiciona-produto",
-    element: <AdicionaProdutos />,
+    element: (
+      <ProtectedRoute>
+        <AdicionaProdutos />
+      </ProtectedRoute>
+    ),
   },
   // editar produto
   {
     path: "/editar-produto/:id",
-    element: <EditarProduto />,
+    element: (
+      <ProtectedRoute>
+        <EditarProduto />
+      </ProtectedRoute>
+    ),
   },
 
   //perfil
   {
     path: "/perfil",
-    element: <Perfil />,
+    element: (
+      <ProtectedRoute>
+        <Perfil />
+      </ProtectedRoute>
+    ),
   },
 
 ]);
