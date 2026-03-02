@@ -159,56 +159,86 @@ function VerProduto() {
                         Voltar
                     </button>
 
-                    <h1 className="text-3xl md:text-4xl font-bold text-purple-800">
-                        {produto?.name}
-                    </h1>
+                    <div className="flex justify-between">
+                        <h1 className="text-3xl md:text-4xl font-bold text-purple-800">
+                            {produto?.name}
+                        </h1>
+                        <div className="flex gap-5">
+                            <button
+                                onClick={() => navigate(`/editar-produto/${id}`)}
+                                className="bg-yellow-500 text-white px-4 py-2 rounded-md cursor-pointer"
+                            >
+                                Editar
+                            </button>
+                            <button
+                                onClick={() => setShowConfirm(true)}
+                                className="bg-red-600 text-white px-4 py-2 rounded-md  cursor-pointer"
+                            >
+                                Deletar
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* INFO */}
-                <div className="grid grid-cols-2 gap-10 mb-12">
+                <div className="grid grid-cols-2 gap-10 mb-12 h-fit">
+                    <div className="bg-white p-6 rounded-xl shadow w-full">
 
-                    <div className="bg-white p-6 rounded-xl shadow">
-                        <p><strong>Preço:</strong> {formatarPreco(produto?.price)}</p>
-                        <p><strong>Categoria:</strong> {categoriaNome}</p>
-                        <p><strong>Descrição:</strong> {produto?.description}</p>
-                        <p><strong>Estoque Atual:</strong> {estoque} und.</p>
+
+                        <h2 className="text-2xl font-bold text-purple-700 mb-6 border-b pb-2 text-center">
+                            Dados
+                        </h2>
+
+
+                        <div className="space-y-3 text-gray-700 grid grid-cols-2 items-center justify-center">
+
+                            <p className="text-center font-normal text-xl">
+                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Preço:</span>{" "}
+                                {formatarPreco(produto?.price)}
+                            </p>
+
+                            <p className="text-center font-normal text-xl">
+                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Categoria:</span>{" "}
+                                {categoriaNome}
+                            </p>
+
+                            <p className="text-center font-normal text-xl">
+                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Descrição:</span>{" "}
+                                {produto?.description}
+                            </p>
+
+                            <p className="text-center font-normal text-xl">
+                                <span className="flex flex-col text-center font-medium text-gray-900 text-xl">Estoque Atual:</span>{" "}
+                                {estoque} und.
+                            </p>
+
+                        </div>
                     </div>
-
                     <div className="bg-linear-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
                         <Package size={80} className="text-white" />
                     </div>
                 </div>
 
                 {/* BOTÕES */}
-                <div className="flex flex-wrap gap-3 mb-6">
+                <div className="flex flex-wrap gap-3 mb-6 justify-between">
+                    <h2 className="text-2xl md:text-3xl font-bold text-purple-800">
+                        Tabela de movimentações
+                    </h2>
+                    <div className="flex gap-5">
+                        <button
+                            onClick={() => { setTipo("entrada"); setModalAberto(true); }}
+                            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 cursor-pointer"
+                        >
+                            <Plus size={16} /> Entrada
+                        </button>
+                        <button
+                            onClick={() => { setTipo("saida"); setModalAberto(true); }}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2 cursor-pointer"
+                        >
+                            <Plus size={16} /> Saída
+                        </button>
+                    </div>
 
-                    <button
-                        onClick={() => { setTipo("entrada"); setModalAberto(true); }}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2"
-                    >
-                        <Plus size={16} /> Entrada
-                    </button>
-
-                    <button
-                        onClick={() => { setTipo("saida"); setModalAberto(true); }}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2"
-                    >
-                        <Plus size={16} /> Saída
-                    </button>
-
-                    <button
-                        onClick={() => navigate(`/produtos/editar/${id}`)}
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-md"
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        onClick={() => setShowConfirm(true)}
-                        className="bg-red-600 text-white px-4 py-2 rounded-md"
-                    >
-                        Deletar
-                    </button>
                 </div>
 
                 {/* TABELA */}
@@ -271,13 +301,13 @@ function VerProduto() {
                             <div className="flex justify-between">
                                 <button
                                     onClick={handleAdd}
-                                    className="bg-purple-600 text-white px-4 py-2 rounded"
+                                    className="bg-purple-600 text-white px-4 py-2 rounded cursor-pointer"
                                 >
                                     Salvar
                                 </button>
                                 <button
                                     onClick={() => setModalAberto(false)}
-                                    className="bg-gray-300 px-4 py-2 rounded"
+                                    className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
                                 >
                                     Cancelar
                                 </button>
