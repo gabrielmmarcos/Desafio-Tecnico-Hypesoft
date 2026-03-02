@@ -52,6 +52,30 @@ public class ProductsController : ControllerBase
     }
 
     
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(
+        Guid id, 
+        [FromBody] UpdateProductRequest request)
+    {
+        var product = await _repository.GetByIdAsync(id);
+
+        if (product == null)
+            return NotFound("Produto não encontrado");
+
+        // Usando o novo método que criamos na Entidade
+        product.UpdateDetails(request.Name, request.Description, request.Price);
+
+        await _repository.UpdateAsync(id, product);
+
+        return NoContent();
+    }
+
+
+    public record UpdateProductRequest(
+        string Name, 
+        string Description, 
+        decimal Price
+    );
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)

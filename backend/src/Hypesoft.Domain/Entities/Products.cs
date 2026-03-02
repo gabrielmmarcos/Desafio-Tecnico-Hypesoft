@@ -21,12 +21,19 @@ public class Product
         StockQuantity = 0;
     }
 
-    public void Update(string name, string description, decimal price, Guid categoryId)
+   
+    public void UpdateDetails(string name, string description, decimal price)
     {
         Name = name;
         Description = description;
         Price = price;
-        CategoryId = categoryId;
+    }
+
+    public void Update(string name, string description, decimal price)
+    {
+        Name = name;
+        Description = description;
+        Price = price;
     }
 
     public void IncreaseStock(int quantity)

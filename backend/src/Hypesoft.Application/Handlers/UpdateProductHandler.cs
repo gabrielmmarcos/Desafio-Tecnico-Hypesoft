@@ -24,16 +24,14 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
         if (product == null)
             throw new Exception("Produto não encontrado");
 
-        var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+       
 
-        if (category == null)
-            throw new Exception("Categoria não encontrada");
 
         product.Update(
             request.Name,
             request.Description,
-            request.Price,
-            request.CategoryId
+            request.Price
+         
         );
 
         await _productRepository.UpdateAsync(request.Id, product);
