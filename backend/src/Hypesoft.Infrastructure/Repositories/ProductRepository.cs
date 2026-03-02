@@ -1,7 +1,7 @@
+using MongoDB.Driver;
 using Hypesoft.Domain.Entities;
 using Hypesoft.Domain.Repositories;
 using Hypesoft.Infrastructure.Data;
-using MongoDB.Driver;
 
 namespace Hypesoft.Infrastructure.Repositories;
 
@@ -15,45 +15,17 @@ public class ProductRepository : IProductRepository
     }
 
     public async Task CreateAsync(Product product)
-    {
-        await _context.Products.InsertOneAsync(product);
-    }
+        => await _context.Products.InsertOneAsync(product);
 
-    // 🔎 LISTAR POR USUÁRIO (NOVO MÉTODO SEGURO)
-    public async Task<IEnumerable<Product>> GetByUserIdAsync(string userId)
-    {
-        return await _context.Products
-            .Find(p => p.UserId == userId)
-            .ToListAsync();
-    }
+    public async Task<List<Product>> GetAllAsync()
+        => await _context.Products.Find(_ => true).ToListAsync();
 
-    // 🔎 BUSCAR POR ID
-    public async Task<Product?> GetByIdAsync(Guid id)
-    {
-        return await _context.Products
-            .Find(p => p.Id == id)
-            .FirstOrDefaultAsync();
-    }
+    public async Task<Product?> GetByIdAsync(Guid  id)
+        => await _context.Products.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-    // ✏️ ATUALIZAR
-    public async Task UpdateAsync(Product product)
-    {
-        await _context.Products
-            .ReplaceOneAsync(p => p.Id == product.Id, product);
-    }
+    public async Task UpdateAsync(Guid id, Product product)
+        => await _context.Products.ReplaceOneAsync(x => x.Id == id, product);
 
-    // ❌ DELETAR
-    public async Task DeleteAsync(Guid id)
-    {
-        await _context.Products
-            .DeleteOneAsync(p => p.Id == id);
+    public async Task DeleteAsync(Guid  id)
+        => await _context.Products.DeleteOneAsync(x => x.Id == id);
     }
-
-    // 🔥 MANTÉM PARA NÃO QUEBRAR A INTERFACE (caso ainda exista nela)
-    public async Task<IEnumerable<Product>> GetAllAsync()
-    {
-        return await _context.Products
-            .Find(_ => true)
-            .ToListAsync();
-    }
-}
