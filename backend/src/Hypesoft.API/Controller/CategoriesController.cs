@@ -41,4 +41,11 @@ public class CategoriesController : ControllerBase
 
         return Ok(filtered);
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteAll()
+    {
+        await _repository.DeleteAllAsync();
+        return Ok("Todas as categorias foram removidas.");
+    }
 }

@@ -340,7 +340,7 @@
           }
         }
       },
-      "MongoDB.Bson/3.6.0": {
+      "MongoDB.Bson/3.7.0": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.5",
@@ -601,6 +601,9 @@
       "Hypesoft.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "MongoDB.Bson": "3.7.0"
+        },
         "compile": {
           "bin/placeholder/Hypesoft.Domain.dll": {}
         },
@@ -1361,10 +1364,10 @@
         "version.txt"
       ]
     },
-    "MongoDB.Bson/3.6.0": {
-      "sha512": "lP+nZHej9cGFVsZSZQhSdBpD60q7a/ZiLBJcfd+CRWs36BHYteaMx6m1qaHCBWT1wft640r9I4SexqpMc3VscA==",
+    "MongoDB.Bson/3.7.0": {
+      "sha512": "u8f0UAYe2/LWdvLEwwIjkCd2Rx6vBo6Yab+i+D4B3E0AvK1ndzIsIHuGBCeYeg5r8+/V+m1TXLonlhwT9Vfdrg==",
       "type": "package",
-      "path": "mongodb.bson/3.6.0",
+      "path": "mongodb.bson/3.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1375,7 +1378,7 @@
         "lib/net6.0/MongoDB.Bson.xml",
         "lib/netstandard2.1/MongoDB.Bson.dll",
         "lib/netstandard2.1/MongoDB.Bson.xml",
-        "mongodb.bson.3.6.0.nupkg.sha512",
+        "mongodb.bson.3.7.0.nupkg.sha512",
         "mongodb.bson.nuspec",
         "packageIcon.png"
       ]

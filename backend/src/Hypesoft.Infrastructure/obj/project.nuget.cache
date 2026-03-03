@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "e11aPKiJvTw=",
+  "dgSpecHash": "J9iksVhOaho=",
   "success": true,
   "projectFilePath": "/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Infrastructure/Hypesoft.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,7 @@
     "/home/gabriel/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.netcore.platforms/5.0.0/microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
-    "/home/gabriel/.nuget/packages/mongodb.bson/3.6.0/mongodb.bson.3.6.0.nupkg.sha512",
+    "/home/gabriel/.nuget/packages/mongodb.bson/3.7.0/mongodb.bson.3.7.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/mongodb.driver/3.6.0/mongodb.driver.3.6.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
     "/home/gabriel/.nuget/packages/snappier/1.0.0/snappier.1.0.0.nupkg.sha512",

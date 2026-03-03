@@ -1,0 +1,41 @@
+[33m2081698[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m refactor (auth) improving jwt token system
+[33m3e179ed[m fix(edit page) fix edit page issue
+[33m2dd2e14[m fix(put) fix put producst api issue
+[33mb62f632[m style(verProdutos) fix style to be responsiviness
+[33m6ea7622[m feat(category) add category page
+[33m14187b6[m feat(dashboard) Add dashboard component and page
+[33m909c905[m style(verProduto) improving ver produto sytle
+[33mcc8e9c8[m refactor(home/verproduto) improving home style
+[33mdd0e97b[m refactor(addProduto) improving add product
+[33m9a8f27c[m feat(docker) creating docker file
+[33me0143bb[m refactor(Domain) improving Domain
+[33m84ed57a[m refactor(Application) improving Application
+[33m952f970[m refactor(infrastructure) improving insfratructure
+[33m2a5e690[m refactor(api) improving api
+[33m7f9c8b5[m style(products) add style
+[33mf4e05d2[m feat(main) add protected route
+[33m7f5597d[m feat(components) create protected route components
+[33m21d57de[m feat(search) search botton in home
+[33m8f6bed0[m feat(page) create look product page
+[33m7545bce[m feat(page) create edit page
+[33m369c331[m feat(home) creating home page and cards-home component
+[33m3823f66[m style(login) fix login style
+[33mbee1ae2[m fix(api) fix auth/me api problem
+[33mb81087b[m feat(profile) create profile page
+[33mb344d5d[m style(navbar) making navbar component
+[33m0378006[m style(login/register)improving login/register page style
+[33m68ce241[m feat(login) add login page conencted with api
+[33m53de28b[m fix(auth) solving JWT token problem
+[33m1f611df[m feat(auth) add JWT token funcionality
+[33m282aec1[m feat(identity) feature to create login api
+[33mce4bd8d[m feat(login) login page)
+[33mb297a51[m build(docker) connecting docker
+[33m857d7dd[m feat(protucts) add delete and get product id funcionality
+[33mffa72f6[m feat(products) add post/get/put functionality
+[33mefb696a[m built(backend) creating backend structure
+[33m319cd9d[m build(backend) creating backend structure
+[33m6b51dbf[m feat(main) creating main component
+[33m70cddb8[m feat(navbar) creating navbar component
+[33m449e497[m build(frontend) iniciatialize frontend structure
+[33m84406f4[m create repository and readme
+[33m37702fc[m Initial commit

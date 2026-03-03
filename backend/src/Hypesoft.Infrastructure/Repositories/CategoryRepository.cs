@@ -22,4 +22,8 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category?> GetByIdAsync(Guid id)
         => await _context.Categories.Find(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task DeleteAllAsync()
+{
+    await _context.Categories.DeleteManyAsync(_ => true);
+}
 }

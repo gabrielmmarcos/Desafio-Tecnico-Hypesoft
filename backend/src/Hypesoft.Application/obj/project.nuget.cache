@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7hxKs1rI+2c=",
+  "dgSpecHash": "tKhlqQD7sSU=",
   "success": true,
   "projectFilePath": "/home/gabriel/Documents/Hypersoft/Desafio-Tecnico-Hypesoft/backend/src/Hypesoft.Application/Hypesoft.Application.csproj",
   "expectedPackageFiles": [
@@ -14,7 +14,10 @@
     "/home/gabriel/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.identitymodel.logging/8.14.0/microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
-    "/home/gabriel/.nuget/packages/system.diagnostics.diagnosticsource/10.0.0/system.diagnostics.diagnosticsource.10.0.0.nupkg.sha512"
+    "/home/gabriel/.nuget/packages/mongodb.bson/3.7.0/mongodb.bson.3.7.0.nupkg.sha512",
+    "/home/gabriel/.nuget/packages/system.diagnostics.diagnosticsource/10.0.0/system.diagnostics.diagnosticsource.10.0.0.nupkg.sha512",
+    "/home/gabriel/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
+    "/home/gabriel/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }
